@@ -28,8 +28,14 @@ export const peopleActions = {
 
 export const getAllPeopleThunk = () => dispatch => {
     loaderActions.startLoading()
-    peopleApi.getAllPeople().then((data) => {
-        dispatch(peopleActions.setAllPeople(data))
-        loaderActions.stopLoading()
+    peopleApi.getAllPeople().then((peopleData) => {
+        peopleApi.getAllPlanets().then(planets => {
+            const editedPeopleData = peopleData.map(person => ({...person, homeworld : planets[person.homeworld]
+            }))
+            dispatch(peopleActions.setAllPeople(editedPeopleData))
+            localStorage.setItem('allPeopleData', JSON.stringify(editedPeopleData))
+            loaderActions.stopLoading()
+        })
+
     })
 }

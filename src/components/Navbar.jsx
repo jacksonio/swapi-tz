@@ -64,11 +64,11 @@ function ScrollTop(props) {
 export function Navbar(props) {
     const classes = useStyles()
     const dispatch = useDispatch()
+    const {addToast} = useToasts()
+
     const FacebookButtonContainer = styled('div')({
         display: 'none'
     })
-    const {addToast} = useToasts()
-
     const logoutHandler = (e) => {
         e.preventDefault()
         try {

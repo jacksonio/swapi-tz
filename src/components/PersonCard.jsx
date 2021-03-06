@@ -14,7 +14,7 @@ import icon from '../assets/img/icon.png'
 
 const useStyles = makeStyles(() => ({
     root: {
-        maxWidth: 300,
+        width: 300,
     },
     media: {
         backgroundSize: "contain",
@@ -41,23 +41,22 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const PersonCard = ({isLiked = false}) => {
+const PersonCard = ({isLiked = false, photo, name, homeworld, gender}) => {
     const classes = useStyles();
 
     return (
         <Card className={classes.root}>
             <CardHeader
-                title="Name"
+                title={name}
             />
             <CardMedia
                 className={classes.media}
-                image={icon}
+                image={photo ? photo : icon}
                 title="User icon"
-                s
             />
             <CardContent>
-                <div className={classes.info}><PublicIcon className={classes.icon} />World</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon} />Gender</div>
+                <div className={classes.info}><PublicIcon className={classes.icon} />{homeworld}</div>
+                <div className={classes.info}><AccessibilityIcon className={classes.icon} />{gender}</div>
             </CardContent>
             <CardActions disableSpacing className={classes.like}>
                 <IconButton aria-label="add to favorites">
