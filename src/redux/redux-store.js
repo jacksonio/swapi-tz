@@ -3,12 +3,14 @@ import thunk from 'redux-thunk'
 import {loaderReducer} from "./loader-reducer";
 import {peopleReducer} from "./people-reducer";
 import {loginReducer} from "./login-reducer";
+import {profileReducer} from "./profile-reducer";
 
 
 const reducers = combineReducers({
     loaderReducer,
     peopleReducer,
-    loginReducer
+    loginReducer,
+    profileReducer
 })
 
 

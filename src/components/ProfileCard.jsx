@@ -11,6 +11,7 @@ import PublicIcon from '@material-ui/icons/Public';
 import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import {Favorite} from "@material-ui/icons";
 import icon from '../assets/img/icon.png'
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -41,11 +42,18 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const PersonCard = ({isLiked = false, photo, name, homeworld, gender}) => {
+const ProfileCard = ({isLiked = false, photo, name, homeworld, gender}) => {
     const classes = useStyles();
+    const history = useHistory()
+
+
+    const onClickHandler = () => {
+        history.push('/profile')
+        console.log(name, homeworld, gender)
+    }
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} onClick={() => onClickHandler()}>
             <CardHeader
                 title={name}
             />
@@ -67,4 +75,4 @@ const PersonCard = ({isLiked = false, photo, name, homeworld, gender}) => {
     );
 }
 
-export default PersonCard
+export default ProfileCard

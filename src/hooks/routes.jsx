@@ -1,11 +1,11 @@
 import React from 'react'
 
 import {Redirect, Route, Switch} from 'react-router-dom'
-import PersonCard from "../components/PersonCard";
 import MainPage from "../components/MainPage";
 import LoginPage from "../components/LoginPage";
 import {useSelector} from "react-redux";
 import {getIsLoggedIn} from "../selectors/loginSelectors";
+import ProfilePage from "../components/ProfilePage";
 
 export const useRoutes = () => {
 
@@ -15,7 +15,7 @@ export const useRoutes = () => {
         return (
             <Switch>
                 <Route path="/" exact render={() => <MainPage/>}/>
-                <Route path="/person" render={() => <PersonCard/>}/>
+                <Route path="/profile" render={() => <ProfilePage/>}/>
                 <Redirect to="/"/>
             </Switch>
         )

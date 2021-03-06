@@ -75,6 +75,7 @@ export function Navbar(props) {
             if (window.FB) {
                 window.FB.logout()
                 localStorage.removeItem('isLoggedIn')
+                localStorage.removeItem('allPeopleData')
                 dispatch(loginActions.setLogout())
             } else {
                 addToast('Something wrong with Facebook API', {appearance: 'error'})

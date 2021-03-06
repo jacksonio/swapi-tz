@@ -1,8 +1,9 @@
 import React from "react";
 import {useSelector} from "react-redux";
 import {getPeople} from "../selectors/peopleSelectors";
-import PersonCard from "./PersonCard";
+import ProfileCard from "./ProfileCard";
 import {styled} from "@material-ui/core/styles";
+import SearchInput from "./SearchInput";
 
 
 const MainPage = () => {
@@ -13,23 +14,30 @@ const MainPage = () => {
         gridTemplateColumns: "1fr 1fr 1fr",
         gridTemplateRows: "1fr",
         gap: "20px 20px",
-        gridTemplateAreas: ". . ."
+        margin: "20px 0"
     })
-    const PersonContainer = styled('div')({
+    const AlignedContainer = styled('div')({
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
     })
 
+
     return (
-        <CardsGridContainer>
-            {allPeopleArr.map((person) => (
-                <PersonContainer key={person.name}>
-                    <PersonCard homeworld={person.homeworld} name={person.name} gender={person.gender}
-                                photo={person.photo ? person.photo : null}/>
-                </PersonContainer>
-            ))}
-        </CardsGridContainer>
+        <>
+            <AlignedContainer>
+                <SearchInput />
+            </AlignedContainer>
+            <CardsGridContainer>
+                {allPeopleArr.map((person) => (
+                    <AlignedContainer key={person.name}>
+                        <ProfileCard homeworld={person.homeworld} name={person.name} gender={person.gender}
+                                     photo={person.photo ? person.photo : null}/>
+                    </AlignedContainer>
+                ))}
+            </CardsGridContainer>
+        </>
+
     )
 }
 
