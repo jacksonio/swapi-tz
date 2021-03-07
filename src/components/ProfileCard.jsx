@@ -12,6 +12,9 @@ import AccessibilityIcon from '@material-ui/icons/Accessibility';
 import {Favorite} from "@material-ui/icons";
 import icon from '../assets/img/icon.png'
 import {useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {peopleActions, setLikeThunk} from "../redux/people-reducer";
+import {Button} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -24,9 +27,9 @@ const useStyles = makeStyles(() => ({
     avatar: {
         backgroundColor: red[500],
     },
-    like : {
+    actionsContainer : {
         display: "flex",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         alignItems: "center"
     },
     info: {
@@ -42,34 +45,40 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const ProfileCard = ({isLiked = false, photo, name, homeworld, gender}) => {
+const ProfileCard = ({isLiked, photo, name, homeworld, gender}) => {
     const classes = useStyles();
     const history = useHistory()
-
+    const dispatch = useDispatch()
 
     const onClickHandler = () => {
         history.push('/profile')
-        console.log(name, homeworld, gender)
+    }
+
+    const setLikeHandler = () => {
+        dispatch(setLikeThunk(name))
     }
 
     return (
-        <Card className={classes.root} onClick={() => onClickHandler()}>
+        <Card className={classes.root}>
             <CardHeader
                 title={name}
             />
             <CardMedia
                 className={classes.media}
                 image={photo ? photo : icon}
-                title="User icon"
+                title={`${name} card`}
             />
             <CardContent>
                 <div className={classes.info}><PublicIcon className={classes.icon} />{homeworld}</div>
                 <div className={classes.info}><AccessibilityIcon className={classes.icon} />{gender}</div>
             </CardContent>
-            <CardActions disableSpacing className={classes.like}>
-                <IconButton aria-label="add to favorites">
+            <CardActions disableSpacing className={classes.actionsContainer}>
+                <IconButton aria-label="add to favorites" onClick={() => setLikeHandler()}>
                     <Favorite  style={{fill: isLiked ? 'red' : 'black'}} />
                 </IconButton>
+                <Button variant='outlined' onClick={() => onClickHandler()}>
+                    Open profile
+                </Button>
             </CardActions>
         </Card>
     );

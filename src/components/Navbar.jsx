@@ -13,6 +13,7 @@ import {useDispatch} from "react-redux";
 import {loginActions} from "../redux/login-reducer";
 import FacebookButton from "./FacebookButton";
 import {useToasts} from "react-toast-notifications";
+import {peopleActions} from "../redux/people-reducer";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -77,6 +78,7 @@ export function Navbar(props) {
                 localStorage.removeItem('isLoggedIn')
                 localStorage.removeItem('allPeopleData')
                 dispatch(loginActions.setLogout())
+                dispatch(peopleActions.clearAllPeople())
             } else {
                 addToast('Something wrong with Facebook API', {appearance: 'error'})
             }
@@ -99,7 +101,6 @@ export function Navbar(props) {
                         </div>
                         <div className='navbar-navigation'>
                             <NavLink to={'/'} className={classes.navigationItem}>Main page</NavLink>
-                            <NavLink to={'/person'} className={classes.navigationItem}>Person card</NavLink>
                             <a href={'/'} className={classes.navigationItem}
                                onClick={(e) => logoutHandler(e)}>Logout</a>
                         </div>

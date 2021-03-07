@@ -1,13 +1,31 @@
-import React from "react";
-import {useSelector} from "react-redux";
-import {getPeople} from "../selectors/peopleSelectors";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {getIsLikedCheckbox, getLikedPeople, getPeople} from "../selectors/peopleSelectors";
 import ProfileCard from "./ProfileCard";
 import {styled} from "@material-ui/core/styles";
 import SearchInput from "./SearchInput";
+import {getAllPeopleThunk, peopleActions} from "../redux/people-reducer";
+import {getIsLoading} from "../selectors/loaderSelectors";
+import Loader from "./Loader";
 
 
 const MainPage = () => {
     const allPeopleArr = useSelector(getPeople)
+    const likedPeopleArr = useSelector(getLikedPeople)
+    const isFilteredByLikes = useSelector(getIsLikedCheckbox)
+    const dispatch = useDispatch()
+    const isLoading = useSelector(getIsLoading)
+
+    useEffect(() => {
+        const storedPeople = localStorage.getItem('allPeopleData')
+        if (storedPeople) {
+            const allPeopleArr = JSON.parse(localStorage.getItem('allPeopleData'))
+            dispatch(peopleActions.setAllPeople(allPeopleArr))
+        } else {
+            dispatch(getAllPeopleThunk())
+        }
+    }, [dispatch])
+
 
     const CardsGridContainer = styled('div')({
         display: "grid",
@@ -22,22 +40,29 @@ const MainPage = () => {
         alignItems: "center",
     })
 
+    const mappedPeopleArr = isFilteredByLikes ? likedPeopleArr : allPeopleArr
 
     return (
-        <>
-            <AlignedContainer>
-                <SearchInput />
-            </AlignedContainer>
-            <CardsGridContainer>
-                {allPeopleArr.map((person) => (
-                    <AlignedContainer key={person.name}>
-                        <ProfileCard homeworld={person.homeworld} name={person.name} gender={person.gender}
-                                     photo={person.photo ? person.photo : null}/>
-                    </AlignedContainer>
-                ))}
-            </CardsGridContainer>
-        </>
-
+        isLoading
+            ? <Loader/>
+            : <>
+                <AlignedContainer>
+                    <SearchInput/>
+                </AlignedContainer>
+                <CardsGridContainer>
+                    {mappedPeopleArr.map((profile) => (
+                        <AlignedContainer key={profile.name}>
+                            <ProfileCard
+                                isLiked={profile.isLiked}
+                                homeworld={profile.homeworld}
+                                name={profile.name}
+                                gender={profile.gender}
+                                photo={profile.photo ? profile.photo : null}
+                            />
+                        </AlignedContainer>
+                    ))}
+                </CardsGridContainer>
+            </>
     )
 }
 

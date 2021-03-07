@@ -13,7 +13,7 @@ import {getProfileInfo} from "../selectors/profileSelectors";
 
 const useStyles = makeStyles(() => ({
     root: {
-        width: 300,
+        width: 600,
     },
     media: {
         backgroundSize: "contain",
@@ -36,6 +36,12 @@ const useStyles = makeStyles(() => ({
     },
     icon: {
         marginRight: '10px'
+    },
+    cardsContainer: {
+        display: 'grid',
+        rowGap: '20px',
+        gridTemplateColumns: "1fr 1fr 1fr 1fr",
+        gap: "20px 20px"
     }
 }));
 
@@ -67,7 +73,7 @@ const ProfilePage = () => {
                 image={photo ? photo : icon}
                 title="User icon"
             />
-            <CardContent>
+            <CardContent classes={{root: classes.cardsContainer}}>
                 <div className={classes.info}><PublicIcon className={classes.icon}/>{homeworld}</div>
                 <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{gender}</div>
                 <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{height}</div>

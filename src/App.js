@@ -14,6 +14,7 @@ function App() {
     const dispatch = useDispatch()
     const isLoggedIn = useSelector(getIsLoggedIn)
 
+
     useEffect(() => {
         const isLoggedIn = localStorage.getItem('isLoggedIn')
         if (isLoggedIn) {
@@ -22,15 +23,6 @@ function App() {
         }
     }, [dispatch, history])
 
-    useEffect(() => {
-        const storedPeople = localStorage.getItem('allPeopleData')
-        if (storedPeople) {
-            const allPeopleArr = JSON.parse(localStorage.getItem('allPeopleData'))
-            dispatch(peopleActions.setAllPeople(allPeopleArr))
-        } else {
-            dispatch(getAllPeopleThunk())
-        }
-    }, [dispatch])
 
     const routes = useRoutes()
 
