@@ -53,11 +53,7 @@ const MainPage = () => {
                     {mappedPeopleArr.map((profile) => (
                         <AlignedContainer key={profile.name}>
                             <ProfileCard
-                                isLiked={profile.isLiked}
-                                homeworld={profile.homeworld}
-                                name={profile.name}
-                                gender={profile.gender}
-                                photo={profile.photo ? profile.photo : null}
+                                profile={profile}
                             />
                         </AlignedContainer>
                     ))}

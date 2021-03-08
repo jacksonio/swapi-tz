@@ -1,7 +1,5 @@
-import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
-import {getAllPeopleThunk, peopleActions} from "./redux/people-reducer";
 import {Navbar} from "./components/Navbar";
 import {useRoutes} from "./hooks/routes";
 import {useHistory} from "react-router-dom";
@@ -27,7 +25,7 @@ function App() {
     const routes = useRoutes()
 
     return (
-        <div className='App'>
+        <div>
             {isLoggedIn ? <Navbar/> : null}
             {routes}
         </div>

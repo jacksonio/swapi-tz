@@ -1,50 +1,76 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardContent from '@material-ui/core/CardContent';
-import {red} from '@material-ui/core/colors';
-import PublicIcon from '@material-ui/icons/Public';
-import AccessibilityIcon from '@material-ui/icons/Accessibility';
+import clsx from 'clsx';
 import icon from '../assets/img/icon.png'
 import {useSelector} from "react-redux";
 import {getProfileInfo} from "../selectors/profileSelectors";
-
+import {Avatar} from "@material-ui/core";
+import HeightIcon from '@material-ui/icons/Height';
+import {Cake, Colorize, ColorLens, DirectionsCar, FitnessCenter, Movie, Visibility, Wc} from "@material-ui/icons";
 const useStyles = makeStyles(() => ({
     root: {
-        width: 600,
-    },
-    media: {
-        backgroundSize: "contain",
-        paddingTop: '56.25%'
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
-    like: {
         display: "flex",
-        justifyContent: "flex-end",
-        alignItems: "center"
-    },
-    info: {
-        display: "flex",
-        marginTop: "20px",
         justifyContent: "center",
         alignItems: "center",
-        fontSize: "17px"
+        flexWrap: "wrap",
+        marginTop: "30px"
     },
-    icon: {
-        marginRight: '10px'
+    flexAlign: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
     },
-    cardsContainer: {
-        display: 'grid',
-        rowGap: '20px',
-        gridTemplateColumns: "1fr 1fr 1fr 1fr",
-        gap: "20px 20px"
+    profilePhotoContainer: {
+        width: "100%"
+    },
+    fullWidthMargin: {
+        width: "100%",
+        margin: 20
+    },
+    userPhoto: {
+        width: 150,
+        height: 150
+    },
+    userName: {
+        fontSize: 20,
+        fontWeight: 500
+    },
+    itemLabel: {
+        fontSize: 18,
+        fontWeight: 600,
+        marginRight: 5
+    },
+    itemValue: {
+        fontSize: 20,
+    },
+    itemContainer: {
+        marginRight: 20
+    },
+    listContainer: {
+        marginLeft: 16,
+        padding: 0
+    },
+    listTitle: {
+        fontSize: 18,
+        fontWeight: 600
+    },
+    filmsAndVehicles: {
+        display: "flex",
+        width: 590,
+        justifyContent: "space-between",
+        alignItems: "start"
+    },
+    vehicleLabel: {
+        fontWeight: 600
+    },
+    svgIconAlign: {
+        display: 'flex'
+    },
+    iconOffset: {
+        marginRight: 5
     }
-}));
 
+}));
 
 const ProfilePage = () => {
     const classes = useStyles();
@@ -58,34 +84,76 @@ const ProfilePage = () => {
         birth_year,
         gender,
         homeworld,
-        species,
-        starships,
+        films,
+        vehicles,
         photo
     } = useSelector(getProfileInfo)
 
     return (
-        <Card className={classes.root}>
-            <CardHeader
-                title={name}
-            />
-            <CardMedia
-                className={classes.media}
-                image={photo ? photo : icon}
-                title="User icon"
-            />
-            <CardContent classes={{root: classes.cardsContainer}}>
-                <div className={classes.info}><PublicIcon className={classes.icon}/>{homeworld}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{gender}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{height}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{mass}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{hair_color}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{skin_color}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{eye_color}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{birth_year}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{species}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon}/>{starships}</div>
-            </CardContent>
-        </Card>
+        <div className={classes.root}>
+            <div className={clsx(classes.profilePhotoContainer, classes.flexAlign)}>
+                <Avatar alt={`${name} photo`} classes={{root: classes.userPhoto}} src={photo ? photo : icon}/>
+            </div>
+            <div className={classes.userName}>
+                {`${name} from ${homeworld ? homeworld : 'far away galaxy'}`}
+            </div>
+            <div className={clsx(classes.flexAlign, classes.fullWidthMargin)}>
+                <div className={clsx(classes.itemContainer, classes.flexAlign)}>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><HeightIcon classes={{root: classes.iconOffset}} />Height:</span>
+                    <span className={classes.itemValue}>{height}</span>
+                </div>
+                <div className={clsx(classes.itemContainer, classes.flexAlign)}>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><FitnessCenter classes={{root: classes.iconOffset}} />Mass:</span>
+                    <span className={classes.itemValue}>{mass}</span>
+                </div>
+                <div className={clsx(classes.itemContainer, classes.flexAlign)}>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><ColorLens classes={{root: classes.iconOffset}} />Hair color:</span>
+                    <span className={classes.itemValue}>{hair_color}</span>
+                </div>
+            </div>
+            <div className={clsx(classes.flexAlign, classes.fullWidthMargin)}>
+                <div className={clsx(classes.itemContainer, classes.flexAlign)}>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Colorize classes={{root: classes.iconOffset}} />Skin color:</span>
+                    <span className={classes.itemValue}>{skin_color}</span>
+                </div>
+                <div className={clsx(classes.itemContainer, classes.flexAlign)}>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Visibility classes={{root: classes.iconOffset}} />Eye color:</span>
+                    <span className={classes.itemValue}>{eye_color}</span>
+                </div>
+                <div className={clsx(classes.itemContainer, classes.flexAlign)}>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Cake classes={{root: classes.iconOffset}} />Birth year:</span>
+                    <span className={classes.itemValue}>{birth_year}</span>
+                </div>
+                <div className={clsx(classes.itemContainer, classes.flexAlign)}>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Wc classes={{root: classes.iconOffset}}/>Gender:</span>
+                    <span className={classes.itemValue}>{gender}</span>
+                </div>
+            </div>
+            <div className={classes.filmsAndVehicles}>
+                <div>
+                    <span className={clsx(classes.listTitle, classes.svgIconAlign)}><Movie classes={{root: classes.iconOffset}}/>Films</span>
+                    <ul className={classes.listContainer}>
+                        {films.map(film => <li key={film}>{film}</li>)}
+                    </ul>
+                </div>
+                <div>
+                    <span className={clsx(classes.listTitle, classes.svgIconAlign)}><DirectionsCar classes={{root: classes.iconOffset}} />Vehicles</span>
+                  {
+                        vehicles.length
+                            ? <ul className={classes.listContainer}>
+                                {vehicles.map(vehicle =>
+                                    <li key={vehicle.name}>
+                                        <span className={classes.vehicleLabel}>Name:</span> {vehicle.name}
+                                        <br/>
+                                        <span className={classes.vehicleLabel}>Model:</span> {vehicle.model}
+                                    </li>)}
+                            </ul>
+                            : <div>No vehicles</div>
+                    }
+
+                </div>
+            </div>
+        </div>
     );
 }
 

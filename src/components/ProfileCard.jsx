@@ -13,8 +13,9 @@ import {Favorite} from "@material-ui/icons";
 import icon from '../assets/img/icon.png'
 import {useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {peopleActions, setLikeThunk} from "../redux/people-reducer";
+import {setLikeThunk} from "../redux/people-reducer";
 import {Button} from "@material-ui/core";
+import {profileActions} from "../redux/profile-reducer";
 
 const useStyles = makeStyles(() => ({
     root: {
@@ -45,18 +46,22 @@ const useStyles = makeStyles(() => ({
 }));
 
 
-const ProfileCard = ({isLiked, photo, name, homeworld, gender}) => {
+const ProfileCard = ({profile}) => {
+
     const classes = useStyles();
     const history = useHistory()
     const dispatch = useDispatch()
+    const {name, photo, isLiked, gender, homeworld} = profile
 
     const onClickHandler = () => {
+        dispatch(profileActions.setProfile(profile))
         history.push('/profile')
     }
 
     const setLikeHandler = () => {
         dispatch(setLikeThunk(name))
     }
+
 
     return (
         <Card className={classes.root}>
