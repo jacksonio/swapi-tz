@@ -1,17 +1,17 @@
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {Navbar} from "./components/Navbar";
-import {useRoutes} from "./hooks/routes";
-import {useHistory} from "react-router-dom";
-import {loginActions} from "./redux/login-reducer";
-import {getIsLoggedIn} from "./selectors/loginSelectors";
+import React from 'react'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+
+import { Navbar } from './components/Navbar'
+import { useRoutes } from './hooks/routes'
+import { loginActions } from './redux/login-reducer'
+import { getIsLoggedIn } from './selectors/loginSelectors'
 
 function App() {
-
     const history = useHistory()
     const dispatch = useDispatch()
     const isLoggedIn = useSelector(getIsLoggedIn)
-
 
     useEffect(() => {
         const isLoggedIn = localStorage.getItem('isLoggedIn')
@@ -21,15 +21,14 @@ function App() {
         }
     }, [dispatch, history])
 
-
     const routes = useRoutes()
 
     return (
         <div>
-            {isLoggedIn ? <Navbar/> : null}
+            {isLoggedIn ? <Navbar /> : null}
             {routes}
         </div>
-    );
+    )
 }
 
-export default App;
+export default App

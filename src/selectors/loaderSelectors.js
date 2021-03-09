@@ -1,1 +1,1 @@
-export const getIsLoading = state => state.loaderReducer.loading
+export const getIsLoading = (state) => state.loaderReducer.loading

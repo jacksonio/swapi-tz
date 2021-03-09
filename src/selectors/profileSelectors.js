@@ -1,1 +1,1 @@
-export const getProfileInfo = state => state.profileReducer.profileInfo
+export const getProfileInfo = (state) => state.profileReducer.profileInfo

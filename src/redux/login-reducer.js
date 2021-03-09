@@ -5,7 +5,7 @@ const SET_LOGIN_START = 'login/SET_LOGIN_START'
 
 const initialState = {
     isLoggedIn: false,
-    isAuthorization: false
+    isAuthorization: false,
 }
 
 export const loginReducer = (state = initialState, action) => {
@@ -14,10 +14,10 @@ export const loginReducer = (state = initialState, action) => {
             return { ...state, isLoggedIn: false, isAuthorization: true }
         }
         case SET_LOGIN_SUCCESSFUL: {
-            return {...state, isLoggedIn: true, isAuthorization: false}
+            return { ...state, isLoggedIn: true, isAuthorization: false }
         }
         case SET_LOGIN_FAILED: {
-            return {...state, isLoggedIn: false, isAuthorization: false}
+            return { ...state, isLoggedIn: false, isAuthorization: false }
         }
         case SET_LOGOUT: {
             return { ...state, isLoggedIn: false }
@@ -29,8 +29,8 @@ export const loginReducer = (state = initialState, action) => {
 }
 
 export const loginActions = {
-    setLoginStart: () => ({ type: SET_LOGIN_START}),
-    setLoginSuccessful: () => ({ type: SET_LOGIN_SUCCESSFUL}),
-    setLoginFailed: () => ({ type: SET_LOGIN_FAILED}),
+    setLoginStart: () => ({ type: SET_LOGIN_START }),
+    setLoginSuccessful: () => ({ type: SET_LOGIN_SUCCESSFUL }),
+    setLoginFailed: () => ({ type: SET_LOGIN_FAILED }),
     setLogout: () => ({ type: SET_LOGOUT }),
 }

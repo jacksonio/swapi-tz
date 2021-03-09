@@ -5,10 +5,7 @@ const initialState = {
     loading: false,
 }
 
-export const loaderReducer = (
-    state = initialState,
-    action
-) => {
+export const loaderReducer = (state = initialState, action) => {
     switch (action.type) {
         case START_LOADING: {
             return { ...state, loading: true }

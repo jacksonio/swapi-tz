@@ -1,15 +1,13 @@
-import React from "react";
+import React from 'react'
 import FacebookLogin from 'react-facebook-login'
-import {useDispatch, useSelector} from "react-redux";
-import {loginActions} from "../redux/login-reducer";
-import {getIsAuthorization} from "../selectors/loginSelectors";
+import { useDispatch, useSelector } from 'react-redux'
 
+import { loginActions } from '../redux/login-reducer'
+import { getIsAuthorization } from '../selectors/loginSelectors'
 
 const FacebookButton = () => {
-
     const dispatch = useDispatch()
     const isAuthorization = useSelector(getIsAuthorization)
-
 
     const componentClicked = () => {
         dispatch(loginActions.setLoginStart())
@@ -32,10 +30,10 @@ const FacebookButton = () => {
                 isDisabled={isAuthorization}
                 textButton={isAuthorization ? 'Loading' : 'Login with Facebook'}
                 onClick={componentClicked}
-                callback={responseFacebook}/>
+                callback={responseFacebook}
+            />
         </div>
     )
 }
-
 
 export default FacebookButton

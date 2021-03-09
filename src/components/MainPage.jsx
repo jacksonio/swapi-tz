@@ -1,13 +1,14 @@
-import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getIsLikedCheckbox, getLikedPeople, getPeople} from "../selectors/peopleSelectors";
-import ProfileCard from "./ProfileCard";
-import {styled} from "@material-ui/core/styles";
-import SearchInput from "./SearchInput";
-import {getAllPeopleThunk, peopleActions} from "../redux/people-reducer";
-import {getIsLoading} from "../selectors/loaderSelectors";
-import Loader from "./Loader";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { styled } from '@material-ui/core/styles'
 
+import { getIsLikedCheckbox, getLikedPeople, getPeople } from '../selectors/peopleSelectors'
+import { getAllPeopleThunk, peopleActions } from '../redux/people-reducer'
+import { getIsLoading } from '../selectors/loaderSelectors'
+
+import ProfileCard from './ProfileCard'
+import SearchInput from './SearchInput'
+import Loader from './Loader'
 
 const MainPage = () => {
     const allPeopleArr = useSelector(getPeople)
@@ -26,39 +27,36 @@ const MainPage = () => {
         }
     }, [dispatch])
 
-
     const CardsGridContainer = styled('div')({
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr",
-        gridTemplateRows: "1fr",
-        gap: "20px 20px",
-        margin: "20px 0"
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr 1fr',
+        gridTemplateRows: '1fr',
+        gap: '20px 20px',
+        margin: '20px 0',
     })
     const AlignedContainer = styled('div')({
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     })
 
     const mappedPeopleArr = isFilteredByLikes ? likedPeopleArr : allPeopleArr
 
-    return (
-        isLoading
-            ? <Loader/>
-            : <>
-                <AlignedContainer>
-                    <SearchInput/>
-                </AlignedContainer>
-                <CardsGridContainer>
-                    {mappedPeopleArr.map((profile) => (
-                        <AlignedContainer key={profile.name}>
-                            <ProfileCard
-                                profile={profile}
-                            />
-                        </AlignedContainer>
-                    ))}
-                </CardsGridContainer>
-            </>
+    return isLoading ? (
+        <Loader />
+    ) : (
+        <>
+            <AlignedContainer>
+                <SearchInput />
+            </AlignedContainer>
+            <CardsGridContainer>
+                {mappedPeopleArr.map((profile) => (
+                    <AlignedContainer key={profile.name}>
+                        <ProfileCard profile={profile} />
+                    </AlignedContainer>
+                ))}
+            </CardsGridContainer>
+        </>
     )
 }
 
