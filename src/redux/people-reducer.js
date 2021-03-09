@@ -73,6 +73,7 @@ export const getAllPeopleThunk = () => dispatch => {
                             ...person,
                             homeworld: planets[person.homeworld],
                             isLiked: false,
+                            photo: null,
                             films: person.films ? person.films.map(filmUrl => filmsData[filmUrl]) : [],
                             vehicles: person.vehicles ? person.vehicles.map(vehicleUrl => vehiclesData[vehicleUrl]) : []
                         }))

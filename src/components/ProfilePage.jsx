@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import icon from '../assets/img/icon.png'
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getProfileInfo} from "../selectors/profileSelectors";
-import {Avatar} from "@material-ui/core";
+import {Avatar, Button, TextField} from "@material-ui/core";
 import HeightIcon from '@material-ui/icons/Height';
 import {Cake, Colorize, ColorLens, DirectionsCar, FitnessCenter, Movie, Visibility, Wc} from "@material-ui/icons";
+import {setProfileThunk} from "../redux/profile-reducer";
+
 const useStyles = makeStyles(() => ({
     root: {
         display: "flex",
@@ -28,6 +30,7 @@ const useStyles = makeStyles(() => ({
         margin: 20
     },
     userPhoto: {
+        marginRight: 5,
         width: 150,
         height: 150
     },
@@ -68,12 +71,19 @@ const useStyles = makeStyles(() => ({
     },
     iconOffset: {
         marginRight: 5
+    },
+    submitButton: {
+        marginLeft: 5,
+        height: 40
     }
 
 }));
 
 const ProfilePage = () => {
     const classes = useStyles();
+    const dispatch = useDispatch()
+    const [photoUrl, setPhotoUrl] = useState('')
+    const [error, setError] = useState(false)
     const {
         name,
         height,
@@ -89,56 +99,123 @@ const ProfilePage = () => {
         photo
     } = useSelector(getProfileInfo)
 
+    const onChangeHandler = (e) => {
+        setPhotoUrl(e.target.value)
+    }
+
+    const onClickHandler = (e) => {
+        e.preventDefault()
+        const urlRegex = /^(https:|http:|www\.)\S*/gm
+        const regex = new RegExp(urlRegex);
+
+        if (photoUrl.match(regex)) {
+            dispatch(setProfileThunk(photoUrl, name))
+            setPhotoUrl('')
+            setError(false)
+        } else {
+            setError(true)
+        }
+    }
+
     return (
         <div className={classes.root}>
             <div className={clsx(classes.profilePhotoContainer, classes.flexAlign)}>
-                <Avatar alt={`${name} photo`} classes={{root: classes.userPhoto}} src={photo ? photo : icon}/>
+                <Avatar
+                    alt={`${name} photo`}
+                    classes={{root: classes.userPhoto}}
+                    src={photo ? photo : icon}
+                />
+                <form onSubmit={(e) => onClickHandler(e)}>
+                    <div>
+                        <TextField
+                            size='small'
+                            error={error}
+                            value={photoUrl}
+                            onChange={(e) => onChangeHandler(e)}
+                            label="Add photo"
+                            helperText={error ? "Input valid url" : ""}
+                            variant="outlined"
+                        />
+                    </div>
+                </form>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => onClickHandler(e)}
+                    classes={{root: classes.submitButton}}
+                >
+                    Save
+                </Button>
             </div>
             <div className={classes.userName}>
                 {`${name} from ${homeworld ? homeworld : 'far away galaxy'}`}
             </div>
             <div className={clsx(classes.flexAlign, classes.fullWidthMargin)}>
                 <div className={clsx(classes.itemContainer, classes.flexAlign)}>
-                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><HeightIcon classes={{root: classes.iconOffset}} />Height:</span>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}>
+                        <HeightIcon classes={{root: classes.iconOffset}}/>
+                        Height:
+                    </span>
                     <span className={classes.itemValue}>{height}</span>
                 </div>
                 <div className={clsx(classes.itemContainer, classes.flexAlign)}>
-                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><FitnessCenter classes={{root: classes.iconOffset}} />Mass:</span>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}>
+                        <FitnessCenter classes={{root: classes.iconOffset}}/>
+                        Mass:
+                    </span>
                     <span className={classes.itemValue}>{mass}</span>
                 </div>
                 <div className={clsx(classes.itemContainer, classes.flexAlign)}>
-                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><ColorLens classes={{root: classes.iconOffset}} />Hair color:</span>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}>
+                        <ColorLens classes={{root: classes.iconOffset}}/>
+                        Hair color:</span>
                     <span className={classes.itemValue}>{hair_color}</span>
                 </div>
             </div>
             <div className={clsx(classes.flexAlign, classes.fullWidthMargin)}>
                 <div className={clsx(classes.itemContainer, classes.flexAlign)}>
-                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Colorize classes={{root: classes.iconOffset}} />Skin color:</span>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}>
+                        <Colorize classes={{root: classes.iconOffset}}/>
+                        Skin color:</span>
                     <span className={classes.itemValue}>{skin_color}</span>
                 </div>
                 <div className={clsx(classes.itemContainer, classes.flexAlign)}>
-                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Visibility classes={{root: classes.iconOffset}} />Eye color:</span>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}>
+                        <Visibility classes={{root: classes.iconOffset}}/>
+                        Eye color:</span>
                     <span className={classes.itemValue}>{eye_color}</span>
                 </div>
                 <div className={clsx(classes.itemContainer, classes.flexAlign)}>
-                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Cake classes={{root: classes.iconOffset}} />Birth year:</span>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}>
+                        <Cake classes={{root: classes.iconOffset}}/>
+                        Birth year:
+                    </span>
                     <span className={classes.itemValue}>{birth_year}</span>
                 </div>
                 <div className={clsx(classes.itemContainer, classes.flexAlign)}>
-                    <span className={clsx(classes.itemLabel, classes.flexAlign)}><Wc classes={{root: classes.iconOffset}}/>Gender:</span>
+                    <span className={clsx(classes.itemLabel, classes.flexAlign)}>
+                        <Wc classes={{root: classes.iconOffset}}/>
+                        Gender:
+                    </span>
                     <span className={classes.itemValue}>{gender}</span>
                 </div>
             </div>
             <div className={classes.filmsAndVehicles}>
                 <div>
-                    <span className={clsx(classes.listTitle, classes.svgIconAlign)}><Movie classes={{root: classes.iconOffset}}/>Films</span>
+                    <span className={clsx(classes.listTitle, classes.svgIconAlign)}>
+                        <Movie classes={{root: classes.iconOffset}}/>
+                        Films
+                    </span>
                     <ul className={classes.listContainer}>
                         {films.map(film => <li key={film}>{film}</li>)}
                     </ul>
                 </div>
                 <div>
-                    <span className={clsx(classes.listTitle, classes.svgIconAlign)}><DirectionsCar classes={{root: classes.iconOffset}} />Vehicles</span>
-                  {
+                    <span className={clsx(classes.listTitle, classes.svgIconAlign)}>
+                        <DirectionsCar classes={{root: classes.iconOffset}}/>
+                        Vehicles
+                    </span>
+                    {
                         vehicles.length
                             ? <ul className={classes.listContainer}>
                                 {vehicles.map(vehicle =>
@@ -150,7 +227,6 @@ const ProfilePage = () => {
                             </ul>
                             : <div>No vehicles</div>
                     }
-
                 </div>
             </div>
         </div>

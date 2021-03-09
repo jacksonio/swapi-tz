@@ -27,7 +27,9 @@ const SearchInput = () => {
     }
 
     const onCheckedHandler = () => {
-       checked ? dispatch(peopleActions.filterByAll()) : dispatch(peopleActions.filterByLikes())
+       checked
+           ? dispatch(peopleActions.filterByAll())
+           : dispatch(peopleActions.filterByLikes())
     }
 
     const CheckboxContainer = styled('div')({
@@ -44,7 +46,9 @@ const SearchInput = () => {
                 getOptionLabel={(person) => person.name}
                 style={{width: 500, marginRight: 20}}
                 onKeyPress={(e) => onKeyPressedHandler(e)}
-                renderInput={(params) => <TextField {...params} label="Enter person name" variant="outlined"/>}
+                renderInput={(params) =>
+                    <TextField {...params} label="Enter person name" variant="outlined"/>
+                }
             />
             <FormGroup row>
                 <FormControlLabel

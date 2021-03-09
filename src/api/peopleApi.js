@@ -1,8 +1,4 @@
-import {instance} from "./api";
-
-
-// j. vehicles (name, model) +
-
+import {instance} from "./api"
 
 function getAllStarwarsVehicles() {
     let vehicles = [];

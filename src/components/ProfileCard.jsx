@@ -42,6 +42,9 @@ const useStyles = makeStyles(() => ({
     },
     icon: {
         marginRight: '10px'
+    },
+    cardTitle: {
+        textAlign: "center"
     }
 }));
 
@@ -66,6 +69,7 @@ const ProfileCard = ({profile}) => {
     return (
         <Card className={classes.root}>
             <CardHeader
+                className={classes.cardTitle}
                 title={name}
             />
             <CardMedia
@@ -74,11 +78,20 @@ const ProfileCard = ({profile}) => {
                 title={`${name} card`}
             />
             <CardContent>
-                <div className={classes.info}><PublicIcon className={classes.icon} />{homeworld}</div>
-                <div className={classes.info}><AccessibilityIcon className={classes.icon} />{gender}</div>
+                <div className={classes.info}>
+                    <PublicIcon className={classes.icon} />
+                    {homeworld}
+                </div>
+                <div className={classes.info}>
+                    <AccessibilityIcon className={classes.icon} />
+                    {gender}
+                </div>
             </CardContent>
             <CardActions disableSpacing className={classes.actionsContainer}>
-                <IconButton aria-label="add to favorites" onClick={() => setLikeHandler()}>
+                <IconButton
+                    aria-label="add to favorites"
+                    onClick={() => setLikeHandler()}
+                >
                     <Favorite  style={{fill: isLiked ? 'red' : 'black'}} />
                 </IconButton>
                 <Button variant='outlined' onClick={() => onClickHandler()}>
